@@ -81,10 +81,10 @@ if __name__ == '__main__':
         final_split = pickle.load(final_split_path)
 
     # create hold-out validation set, to demonstrate create_train_val function
-    subjects_train, subjects_val = create_train_val(final_split['train'], 0.1)
-    output_dict = {'train': subjects_train, 'val': subjects_val, 'test': final_split['test']}
-    with open(output_dir / 'final_split_val.pickle', 'wb') as output_path:
-        pickle.dump(output_dict, output_path)
+    # subjects_train, subjects_val = create_train_val(final_split['train'], 0.1)
+    # output_dict = {'train': subjects_train, 'val': subjects_val, 'test': final_split['test']}
+    # with open(output_dir / 'final_split_val.pickle', 'wb') as output_path:
+    #     pickle.dump(output_dict, output_path)
 
     # create cross validation folds, to demonstrate create_cv_folds function
     _, val_folds = create_cv_folds(np.array(final_split['train'], dtype=Subject), 6)

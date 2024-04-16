@@ -30,7 +30,7 @@ def get_true_positives(spindles_detected, spindles_gs, overlap_thresholds):
     # If either there is no spindle detected or the gold standard doesn't contain any spindles, there can't be any true
     # positives
     if (spindles_detected.shape[0] == 0) or (spindles_gs.shape[0] == 0):
-        return np.zeros_like(overlap_thresholds, dtype=np.int)
+        return np.zeros_like(overlap_thresholds, dtype=int)
 
     # Get the overlaps in format (n_detected_spindles, n_gs_spindles)
     overlap = get_overlap(spindles_detected, spindles_gs)
@@ -39,7 +39,7 @@ def get_true_positives(spindles_detected, spindles_gs, overlap_thresholds):
     # Make sure there is at max one gs event per detection
     overlap_valid = np.where(overlap_valid == np.max(overlap_valid, axis=1).reshape(-1, 1), overlap_valid, 0)
 
-    n_true_positives = np.empty_like(overlap_thresholds, dtype=np.int)
+    n_true_positives = np.empty_like(overlap_thresholds, dtype=int)
 
     # Calculate the valid matches (true positives) depending on the overlap threshold
     for idx, overlap_threshold in enumerate(overlap_thresholds):

@@ -28,6 +28,10 @@ experiment:
     n_epochs: 800
     early_stopping: 300
 
+    trainer:
+      devices: 1
+      num_sanity_val_steps: 0
+
     optimizer:
       class_name: 'Adam'
       params:

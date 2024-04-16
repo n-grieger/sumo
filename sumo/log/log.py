@@ -6,8 +6,8 @@ from argparse import Namespace
 from typing import Union, Dict, Optional
 
 import torch
-from pytorch_lightning.loggers import LightningLoggerBase
-from pytorch_lightning.loggers.base import rank_zero_experiment
+from pytorch_lightning.loggers import Logger
+from pytorch_lightning.loggers.logger import rank_zero_experiment
 from pytorch_lightning.utilities import rank_zero_only
 
 from sumo.config import Config
@@ -87,7 +87,7 @@ class ExperimentLogger(logging.Logger):
         [self.info(f'{x:30s}: {_handle_value(y)}') for x, y in metrics_dict.items() if x != 'epoch']
 
 
-class FileLogger(LightningLoggerBase):
+class FileLogger(Logger):
     """
     Logger for Pytorch Lightning using the ExperimentLogger to log losses and metrics to a log file.
 

@@ -108,6 +108,10 @@ class Config:
         if type(self.early_stopping) is int:
             assert self.early_stopping >= 1, 'the number of epochs used for early stopping has to be at least one'
 
+        # configuration of the trainer
+        config_trainer = config_train['trainer']
+        self.trainer_args = config_trainer
+
         # configuration of the used optimizer
         config_optimizer = config_train['optimizer']
         self.optimizer = getattr(optim, config_optimizer['class_name'])

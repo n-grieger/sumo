@@ -69,6 +69,8 @@ class SUMO(pl.LightningModule):
             model_params['activation']
         )
 
+        self.validation_step_outputs = []
+
     def dense_logits(self, x: torch.Tensor) -> torch.Tensor:
         """
         Implementation of the U-part of the U-Net architecture, i.e. the encoders and decoders.
@@ -229,12 +231,15 @@ class SUMO(pl.LightningModule):
         loss = self.criterion(logits, mask)
         self.log('loss/val', loss, on_step=False, on_epoch=True, prog_bar=True, logger=True)
 
-        return self.get_batch_results(logits, mask)
+        batch_results = self.get_batch_results(logits, mask)
+        self.validation_step_outputs.append(batch_results)
 
-    def validation_epoch_end(self, outputs):
-        n_spindles_detected = sum([x['detected'] for x in outputs])
-        n_spindles_gs = sum([x['gold_standard'] for x in outputs])
-        n_true_positives = np.array([x['tp'] for x in outputs]).sum(axis=0)
+        return batch_results
+
+    def on_validation_epoch_end(self):
+        n_spindles_detected = sum([x['detected'] for x in self.validation_step_outputs])
+        n_spindles_gs = sum([x['gold_standard'] for x in self.validation_step_outputs])
+        n_true_positives = np.array([x['tp'] for x in self.validation_step_outputs]).sum(axis=0)
 
         # calculate precision, recall and f1 over the validation dataset
         precision, recall, f1 = metric_scores(n_spindles_detected, n_spindles_gs, n_true_positives)

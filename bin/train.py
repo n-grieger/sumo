@@ -19,8 +19,8 @@ def get_args():
     parser.add_argument('-e', '--experiment', type=str, required=True,
                         help='Name of configuration yaml file to use for this run')
 
-    parser = pl.Trainer.add_argparse_args(parser)
-    parser.set_defaults(gpus=1, num_sanity_val_steps=0)
+    # parser = add_argparse_args(parser)
+    # parser.set_defaults(gpus=1, num_sanity_val_steps=0)
 
     return parser.parse_args()
 
@@ -38,9 +38,9 @@ def main(datamodule, logger):
     model = SUMO(config)
     file_logger = FileLogger(logger)
     tb_logger = TensorBoardLogger(config.output_dir, name='tensorboard', version='.')
-    trainer = pl.Trainer.from_argparse_args(args, callbacks=get_callbacks(config.output_dir),
-                                            logger=[file_logger, tb_logger], max_epochs=config.n_epochs,
-                                            log_every_n_steps=45)
+    trainer = pl.Trainer(callbacks=get_callbacks(config.output_dir),
+                         logger=[file_logger, tb_logger], max_epochs=config.n_epochs,
+                         log_every_n_steps=45, **config.trainer_args)
     trainer.fit(model, datamodule=datamodule)
 
 
