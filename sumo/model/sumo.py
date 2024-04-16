@@ -250,6 +250,8 @@ class SUMO(pl.LightningModule):
         # log the F1 score averaged over the overlap thresholds
         self.log('metrics/val_f1_mean', f1.mean())
 
+        self.validation_step_outputs.clear()
+
     def test_step(self, batch, batch_idx, dataloader_idx=None):
         data, mask = batch
         # training is performed on dense logits, therefore the (test) loss is calculated using these

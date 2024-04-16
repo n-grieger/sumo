@@ -12,6 +12,9 @@ data:
   preprocessing: True
 
 experiment:
+  general:
+    float32_matmul_precision: 'highest'
+
   model:
     n_classes: 2
     activation: 'ReLU'

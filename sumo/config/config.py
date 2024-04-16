@@ -75,6 +75,11 @@ class Config:
         # configuration of the experiment itself
         config_experiment = config['experiment']
 
+        config_general = config_experiment['general']
+        self.float32_matmul_precision = config_general['float32_matmul_precision']
+        assert self.float32_matmul_precision in ['medium', 'high', 'highest'], \
+            'the precision of the float32 matrix multiplication has to be medium, high, or highest'
+
         # configuration of the used model
         config_model = config_experiment['model']
         self.n_classes = config_model['n_classes']

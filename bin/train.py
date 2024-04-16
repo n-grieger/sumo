@@ -3,6 +3,7 @@ from pathlib import Path
 from sys import path
 
 import pytorch_lightning as pl
+import torch
 from pytorch_lightning.callbacks import ModelCheckpoint
 from pytorch_lightning.loggers import TensorBoardLogger
 
@@ -48,6 +49,8 @@ if __name__ == '__main__':
     args = get_args()
 
     config = Config(args.experiment)
+
+    torch.set_float32_matmul_precision(config.float32_matmul_precision)
 
     if config.cross_validation is None:
         logger = ExperimentLogger(config)
