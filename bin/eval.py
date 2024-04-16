@@ -5,7 +5,6 @@ from sys import path
 from typing import Union
 
 import numpy as np
-import pytorch_lightning as pl
 import torch
 
 # append root dir to python path so that we find `sumo`
@@ -71,8 +70,8 @@ def get_args():
     parser.add_argument('-t', '--test', action=argparse.BooleanOptionalAction, default=False,
                         help='Use test data instead of validation data')
 
-    parser = pl.Trainer.add_argparse_args(parser)
-    parser.set_defaults(gpus=1, num_sanity_val_steps=0)
+    # parser = pl.Trainer.add_argparse_args(parser)
+    # parser.set_defaults(gpus=1, num_sanity_val_steps=0)
 
     return parser.parse_args()
 
