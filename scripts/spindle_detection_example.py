@@ -100,7 +100,7 @@ if __name__ == '__main__':
     sample_rate = 100
     overlap_thresholds = config.overlap_thresholds
 
-    trainer = pl.Trainer(gpus=1, num_sanity_val_steps=0, logger=False)
+    trainer = pl.Trainer(devices=1, num_sanity_val_steps=0, logger=False)
     predictions_all = trainer.predict(model, datamodule.test_dataloader())
 
     plot_good_interval(datamodule.subjects_test, predictions_all)

@@ -205,7 +205,7 @@ if __name__ == '__main__':
     win_step_sec = 0.1
     thresholds = np.array([1.25, 1.6, 1.3, 0.69])
 
-    trainer = pl.Trainer(gpus=1, num_sanity_val_steps=0, logger=False)
+    trainer = pl.Trainer(devices=1, num_sanity_val_steps=0, logger=False)
     predictions_all = trainer.predict(model, datamodule.test_dataloader())
 
     overlaps, overlaps_a7 = [], []

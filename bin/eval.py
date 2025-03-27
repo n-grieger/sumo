@@ -85,7 +85,17 @@ if __name__ == '__main__':
         datamodule = MODADataModule(config)
         model = get_model(args.input)
 
-        precisions, recalls, f1s = custom_evaluation(datamodule, model)
+        precisions, recalls, f1s = custom_evaluation(datamodule, model, plot=True)
+        precisions, recalls, f1s = np.array(precisions), np.array(recalls), np.array(f1s)
+
+        if args.test:
+            # results in format (dataset, overlap_threshold)
+            print(np.round(f1s[:, 4], 3))
+            print(np.round(f1s.mean(axis=1), 3), np.round(f1s.std(axis=1), 3))
+        else:
+            # results in format (overlap_threshold)
+            print(np.round(f1s[4], 3))
+            print(np.round(f1s.mean(), 3))
     else:
         results = []
         fold_directories = sorted(Path(args.input).glob('fold_*'))

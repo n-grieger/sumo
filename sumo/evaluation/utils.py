@@ -74,4 +74,4 @@ def plot_metrics(precision, recall, f1, overlap_thresholds):
     ax.legend()
 
     fig.tight_layout()
-    fig.show()
+    plt.show()
